@@ -61,9 +61,23 @@ library(forcats)
 ggplot(data=filter(sumstatesummort, sumcount!=0&sumpop!=0&date2>="2020-04-01"), aes(fill=factor(date2), y=propmort*1000000, x=fct_infreq(Province_State))) + 
   geom_bar(position="stack", stat="identity")
 
-ggplot(data=filter(sumstatesummort, sumcount!=0&sumpop!=0&date2>="2020-04-01"&propmort>=0.000025), aes(x=fct_reorder(Province_State, propmort,max), y=propmort*1000000)) + 
+ggplot(data=filter(sumstatesummort, sumcount!=0&sumpop!=0&date2>="2020-04-01"&propmort>=0.000025), aes(x=fct_reorder(Province_State, -propmort,min), y=propmort*1000000)) + 
   geom_bar(position="stack", stat="identity") +
   #geom_smooth(method="lm", se=F) +
-  facet_wrap(~date2) +
+  facet_wrap(~fct_inorder(factor(date2))) +
   guides(fill=F) + 
+  theme(axis.text.x = element_text(angle = 75, hjust = 1)) +
+  xlab("State, in order of most recent day") +
+  ylab("Number of Fatalities per million")
+
+ggplot(data=filter(sumstatesummort, sumcount!=0&sumpop!=0&date2>="2020-04-01"), aes(fill=factor(date2), y=propmort*1000000, x=fct_reorder(Province_State, -propmort,min))) + 
+  geom_bar(position="stack", stat="identity")  + 
   theme(axis.text.x = element_text(angle = 75, hjust = 1))
+
+ggplot(data=filter(sumstatesummort, sumcount!=0&sumpop!=0&date2>="2020-04-01"), aes(y=propmort*1000000, x=fct_inorder(factor(date2)))) + 
+  geom_bar(position="stack", stat="identity")  +
+  facet_wrap(~fct_reorder(Province_State, -propmort,min)) + 
+  theme(axis.text.x = element_text(angle = 75, hjust = 1)) +
+  xlab("Date, by state") +
+  ylab("Number of Fatalities per million")
+

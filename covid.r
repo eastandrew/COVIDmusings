@@ -13,6 +13,8 @@ deathdata2long <- deathdata %>%
 
 deathdata2long$date2 <- mdy(deathdata2long$date)
 
+deathdata2long$Province_State <- factor(deathdata2long$Province_State)
+
 
 sumstatesummortlast <- deathdata2long %>%
   filter(date2==max(date2)&Population>0) %>%
@@ -30,7 +32,12 @@ sumstatesummort <- deathdata2long %>%
   group_by(Province_State, date2) %>%
   summarize(sumpop = sum(Population, na.rm=T),
             sumcount = sum(count, na.rm=T),
-            propmort = sumcount/sumpop)
+            propmort = sumcount/sumpop) %>%
+  arrange(-propmort)
+
+
+barplot(rev(sumstatesummort$propmort[1:5]*1000000), names.arg=rev(sumstatesummort$Province_State[1:5]), horiz=T, las=1, xlab="Fatalities per Million, top 25 states and territories,\nas of 2 Apr 2020, per JHU APL data")
+
 
 ggplot(data=filter(sumstatesummort, sumcount!=0&sumpop!=0&date2>="2020-03-01"), aes(x=date2, y=propmort, group=Province_State)) +
   geom_point() +
@@ -42,3 +49,21 @@ ggplot(data=filter(sumstatesummort, sumcount!=0&sumpop!=0&date2>="2020-03-01"), 
   geom_point() +
   geom_smooth(method="loess", se=T) +
   scale_y_log10()
+
+
+
+
+
+ggplot(data=filter(sumstatesummort, sumcount!=0&sumpop!=0&date2>="2020-04-01"), aes(fill=Province_State, y=propmort*1000000, x=date2)) + 
+  geom_bar(position="fill", stat="identity")
+
+library(forcats)
+ggplot(data=filter(sumstatesummort, sumcount!=0&sumpop!=0&date2>="2020-04-01"), aes(fill=factor(date2), y=propmort*1000000, x=fct_infreq(Province_State))) + 
+  geom_bar(position="stack", stat="identity")
+
+ggplot(data=filter(sumstatesummort, sumcount!=0&sumpop!=0&date2>="2020-04-01"&propmort>=0.000025), aes(x=fct_reorder(Province_State, propmort,max), y=propmort*1000000)) + 
+  geom_bar(position="stack", stat="identity") +
+  #geom_smooth(method="lm", se=F) +
+  facet_wrap(~date2) +
+  guides(fill=F) + 
+  theme(axis.text.x = element_text(angle = 75, hjust = 1))

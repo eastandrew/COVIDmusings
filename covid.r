@@ -7,7 +7,7 @@ library(lubridate)
 deathdata <- read_csv("time_series_covid19_deaths_US.csv")
 #View(deathdata)
 
-deathdata2 <- deathdata %>%
+deathdata2long <- deathdata %>%
   select(-c(1:6,8:10)) %>%  #monitor these variables to confirm they haven't changed.
   pivot_longer(-c(Province_State,Combined_Key, Population), names_to="date", values_to="count")
 

@@ -3,7 +3,7 @@ Generic morning coffee monitoring of the COVID-19 pandemic using data from JHU A
 
 Please confirm you have their repository pulled down and correct file extracted into same directory you place the covid.r script.
 
-This is a storage location for my code, it is not a full-fleged software nor is it a full-fleged software.  I do not posit any value nor correctness in your interpretation or use of it.
+This is a storage location for my code, it is not a full-fleged software nor is it a full-fleged analysis.  I do not posit any value nor correctness in your interpretation or use of it.  See the above link to JHU APL.
 
 If you have questions/comments/etc please post an issue and it may or may not be addressed.
 

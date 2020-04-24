@@ -24,7 +24,7 @@ sumstatesummortlast <- deathdata2long %>%
 
 
 par(mai=c(1,2,0.1,0.1))
-barplot(rev(sumstatesummortlast$propmort[1:25]*100000), names.arg=rev(sumstatesummortlast$Province_State[1:25]), horiz=T, las=1, xlab="Fatalities per Hundred Thousand, top 25 states and territories,\nas of 7 Apr 2020, per JHU APL data")
+barplot(rev(sumstatesummortlast$propmort[1:25]*100000), names.arg=rev(sumstatesummortlast$Province_State[1:25]), horiz=T, las=1, xlab="Fatalities per Hundred Thousand, top 25 states and territories,\nas of 23 Apr 2020, per JHU APL data")
 ## Date here is entered manually, will eventually be auto
 
 
@@ -139,10 +139,10 @@ plot(drm3, log="", legend=F, xlab="Ordinal Date", ylab="Fatality Rate")
 legend("topleft", statelist3, pch=c(1,2,3,4,5,6,7,8,9,10), lty=c(1,2,3,4,5,6,7,8,9,10), bty="n")
 
 par(mfrow=c(1,2), mai=c(0.8,0.8,0.05,0.05))
-plot(drm2, log="", legend=F, xlab="Ordinal Date", ylab="Fatality Rate", ylim=c(1,26), xlim=c(64,98))
+plot(drm2, log="", legend=F, xlab="Ordinal Date", ylab="Fatality Rate", ylim=c(1,100), xlim=c(60,115))
 legend("topleft", statelist, pch=c(1,2,3,4,5,6), lty=c(1,2,3,4,5,6), bty="n")
 text(75,20,"Top 6", font=2, cex=2)
-plot(drm3, log="", legend=F, xlab="Ordinal Date", ylab="Fatality Rate", ylim=c(1,26), xlim=c(64,98))
+plot(drm3, log="", legend=F, xlab="Ordinal Date", ylab="Fatality Rate", ylim=c(1,100), xlim=c(60,115))
 legend("topleft", statelist3, pch=c(1,2,3,4,5,6,7,8,9,10), lty=c(1,2,3,4,5,6,7,8,9,10), bty="n")
 text(80,20, "Tier 2", font=2, cex=2)
 par(mfrow=c(1,1), mai=c(1,1,0.1,0.1))
@@ -167,20 +167,20 @@ plot(drm3b, log="", legend=F, xlab="Ordinal Date", ylab="Proportional Fatality")
 legend("topleft", statelist3, pch=c(1,2,3,4,5,6,7,8,9,10), lty=c(1,2,3,4,5,6,7,8,9,10), bty="n")
 
 par(mfrow=c(1,2), mai=c(0.8,0.8,0.05,0.05))
-plot(drm2b, log="", legend=F, xlab="Ordinal Date", ylab="Proportional Fatality", ylim=c(0,0.00025))
+plot(drm2b, log="", legend=F, xlab="Ordinal Date", ylab="Proportional Fatality", ylim=c(0,0.001))
 legend("topleft", statelist, pch=c(1,2,3,4,5,6), lty=c(1,2,3,4,5,6), bty="n")
 text(75,200,"Top 6", font=2, cex=2)
-plot(drm3b, log="", legend=F, xlab="Ordinal Date", ylab="Proportional Fatality", ylim=c(0,0.00025), xlim=c(64,98))
+plot(drm3b, log="", legend=F, xlab="Ordinal Date", ylab="Proportional Fatality", ylim=c(0,0.001), xlim=c(60,115))
 legend("topleft", statelist3, pch=c(1,2,3,4,5,6,7,8,9,10), lty=c(1,2,3,4,5,6,7,8,9,10), bty="n")
 text(80,200, "Tier 2", font=2, cex=2)
 par(mfrow=c(1,1), mai=c(1,1,0.1,0.1))
 
 
 par(mfrow=c(1,2), mai=c(0.8,0.8,0.05,0.05))
-plot(drm2b, log="y", legend=F, xlab="Ordinal Date", ylab="Proportional Fatality", ylim=c(0.00000008,0.00024), xlim=c(60,98))
+plot(drm2b, log="y", legend=F, xlab="Ordinal Date", ylab="Proportional Fatality", ylim=c(0.00000008,0.001), xlim=c(60,115))
 legend("topleft", statelist, pch=c(1,2,3,4,5,6), lty=c(1,2,3,4,5,6), bty="n")
 text(75,200,"Top 6", font=2, cex=2)
-plot(drm3b, log="y", legend=F, xlab="Ordinal Date", ylab="Proportional Fatality", ylim=c(0.00000008,0.00024), xlim=c(60,98))
+plot(drm3b, log="y", legend=F, xlab="Ordinal Date", ylab="Proportional Fatality", ylim=c(0.00000008,0.001), xlim=c(60,115))
 legend("topleft", statelist3, pch=c(1,2,3,4,5,6,7,8,9,10), lty=c(1,2,3,4,5,6,7,8,9,10), bty="n")
 text(80,200, "Tier 2", font=2, cex=2)
 par(mfrow=c(1,1), mai=c(1,1,0.1,0.1))

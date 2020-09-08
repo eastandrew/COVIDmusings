@@ -1,10 +1,32 @@
-library(tidyverse)
-library(lubridate)
+### install_load function from maloneypatr, Irucka Embry, USGS and stack overflow 
+### see https://gitlab.com/iembry/install.load
+### Check if R package is installed then load library answered by
+###	maloneypatr is the source for the original function. See http://stackoverflow.com/questions/15155814/check-if-r-package-is-installed-then-load-library
+install_load <- function (package1, ...) {
+  # convert arguments to vector
+  packages <- c(package1, ...)
+  # start loop to determine if each package is installed
+  for (package in packages) {
+    # if package is installed locally, load
+    if (package %in% rownames(installed.packages()))
+      try(do.call(library, list(package))) # Source 2
+    # if package is not installed locally, download and then load
+    else {
+      install.packages(package, repos =
+                         c("https://cloud.r-project.org"),
+                       dependencies = NA, type = getOption("pkgType"))
+      try(do.call(library, list(package))) # Source 2
+    }
+  }
+}
+
+install_load("tidyverse","lubridate","forcats","drc","magic")
+
 
 
 # pull these data down from <https://github.com/CSSEGISandData/COVID-19>
-# save in same directory as this script
-deathdata <- read_csv("time_series_covid19_deaths_US.csv")
+
+deathdata <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_US.csv")
 #View(deathdata)
 
 deathdata2long <- deathdata %>%
@@ -63,7 +85,7 @@ ggplot(data=filter(sumstatesummort, sumcount!=0&sumpop!=0&date2>="2020-03-01"), 
 ggplot(data=filter(sumstatesummort, sumcount!=0&sumpop!=0&date2>="2020-04-01"), aes(fill=Province_State, y=propmort*100000, x=date2)) +
   geom_bar(position="fill", stat="identity")
 
-library(forcats)
+
 ggplot(data=filter(sumstatesummort, sumcount!=0&sumpop!=0&date2>="2020-04-01"), aes(fill=factor(date2), y=propmort*100000, x=fct_infreq(Province_State))) +
   geom_bar(position="stack", stat="identity")
 
@@ -115,8 +137,7 @@ summary(lm1)
 plot(log10(fatalityrate)~day, data=sumsummort)
 abline(lm1)
 
-library(drc)
-library(magic)
+
 drm1 <- drm(fatalityrate~day, data=sumsummort, fct=LL.5(), type="continuous")
 plot(drm1, log="")
 ED(drm1, 50)
